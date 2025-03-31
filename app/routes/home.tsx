@@ -1,5 +1,6 @@
+import { Button } from "~/components/ui/button";
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { useNavigate } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +10,11 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Welcome />;
+  const navigate = useNavigate();
+  return (
+    <div>
+      <Button onClick={() => navigate("/dashboard")}>go to dashboard</Button>
+      <Button onClick={() => navigate("/login")}>go to login</Button>
+    </div>
+  );
 }
