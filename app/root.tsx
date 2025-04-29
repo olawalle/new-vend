@@ -6,6 +6,10 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { useHandleNetworkError } from "./hooks/utils/useHandleNetwork";
+import { ReactQueryProvider } from "./hooks/ReactQueryProvider";
+import { Toaster } from "react-hot-toast";
+import { Toaster as Toaster2 } from "~/compo/toaster";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -24,6 +28,7 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  useHandleNetworkError();
   return (
     <html lang="en">
       <head>
@@ -33,7 +38,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <Toaster />
+        <Toaster2 />
         <ScrollRestoration />
         <Scripts />
       </body>

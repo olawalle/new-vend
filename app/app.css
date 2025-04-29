@@ -17,6 +17,67 @@ body {
   }
 }
 
+@font-face {
+  font-family: 'clash-display-light';
+  src: url('./assets/fonts/ClashDisplay_Complete/Fonts/OTF/ClashDisplay-Regular.otf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'clash-display-medium';
+  src: url('./assets/fonts/ClashDisplay_Complete/Fonts/OTF/ClashDisplay-Medium.otf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'clash-display-semibold';
+  src: url('./assets/fonts/ClashDisplay_Complete/Fonts/OTF/ClashDisplay-Semibold.otf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'clash-display-bold';
+  src: url('./assets/fonts/ClashDisplay_Complete/Fonts/OTF/ClashDisplay-Bold.otf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+@font-face {
+  font-family: 'inter-light';
+  src: url('./assets/fonts/Inter_Complete/Fonts/TTF/Inter-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'inter-medium';
+  src: url('./assets/fonts/Inter_Complete/Fonts/TTF/Inter-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'inter-semibold';
+  src: url('./assets/fonts/Inter_Complete/Fonts/TTF/Inter-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'inter-bold';
+  src: url('./assets/fonts/Inter_Complete/Fonts/TTF/Inter-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -131,4 +192,15 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
