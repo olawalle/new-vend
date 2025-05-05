@@ -448,16 +448,6 @@ export default function VendorDetails() {
                                 {/* </span> */}
                               </span>
 
-                              {/* <AppText
-                            smallText
-                            weight="light"
-                            size={14}
-                            color="#545454"
-                            className="lg:hidden"
-                          >
-                            {truncateText(_?.address, 40)}
-                          </AppText> */}
-
                               <AppText
                                 smallText
                                 weight="light"
