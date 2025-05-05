@@ -81,7 +81,7 @@ const AppInput: React.FC<AppInputProps> = ({
             : "border-[#CBD5E1]"
         }
           `}
-        onClick={() => inputRef.current?.focus()}
+        // onClick={() => inputRef.current?.focus()}
       >
         {placeholder && (
           <AppText
@@ -105,6 +105,7 @@ const AppInput: React.FC<AppInputProps> = ({
               zIndex: 1,
             }}
             smallText
+             // onClick={() => inputRef.current?.focus()}
           >
             {placeholder}
           </AppText>

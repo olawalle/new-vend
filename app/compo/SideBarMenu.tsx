@@ -60,11 +60,6 @@ const SideBarMenu = ({ setShowSidebar }: any) => {
       icon: VendorIcon,
       children: [
         { title: "Vendor List", link: "/vendors" },
-        {
-          title: "Pending Store Approvals",
-          link: "#",
-        },
-        { title: "Blocked Vendors", link: "#" },
       ],
     },
     {

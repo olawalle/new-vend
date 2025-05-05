@@ -76,15 +76,15 @@ export default function VendorDetails() {
     enabled: !!state?.vendorId, // optional: prevent query on initial mount if filters are empty
   });
 
-  React.useEffect(() => {
-    if (isSuccess && Avendor?.vendor?.stores?.length > 0) {
-      if (!selectedStore) {
-        setSelectedStore(Avendor?.vendor?.stores[0]);
-      }
-    } else {
-      setSelectedStore(null);
-    }
-  }, [isSuccess, Avendor, selectedStore]);
+  // React.useEffect(() => {
+  //   if (isSuccess && Avendor?.vendor?.stores?.length > 0) {
+  //     if (!selectedStore) {
+  //       setSelectedStore(Avendor?.vendor?.stores[0]);
+  //     }
+  //   } else {
+  //     setSelectedStore(null);
+  //   }
+  // }, [isSuccess, Avendor, selectedStore]);
 
   const {
     data: category = [],
@@ -132,7 +132,9 @@ export default function VendorDetails() {
   });
 
   const handleAprroveStore = () => {
-    approveStoreMutation.mutate(selectedStore?.id);
+    approveStoreMutation.mutate(
+      selectedStore?.id || Avendor?.vendor?.stores[0]?.id
+    );
     setApproveLoading(true);
   };
 
@@ -149,8 +151,8 @@ export default function VendorDetails() {
     },
     onSuccess: () => {
       setRejectLoading(false);
-      setReject(false)
-      setRejectReason("")
+      setReject(false);
+      setRejectReason("");
       toast({
         title: "Store Rejection Successful",
         description: "Store rejected successfully",
@@ -161,11 +163,11 @@ export default function VendorDetails() {
 
   const handleRejectStore = () => {
     const data = {
-      id:selectedStore?.id,
-      update:{
-        reason:rejectReason
-      }
-    }
+      id: selectedStore?.id || Avendor?.vendor?.stores[0]?.id,
+      update: {
+        reason: rejectReason,
+      },
+    };
     rejectStoreMutation.mutate(data);
     setRejectLoading(true);
   };
@@ -309,6 +311,28 @@ export default function VendorDetails() {
                         color="#1A1A1A"
                         className="w-[45%]"
                       >
+                        Vendor Name
+                      </AppText>
+                      <AppText
+                        smallText
+                        weight="semibold"
+                        size={14}
+                        color="#1A1A1A"
+                        align="left"
+                        className="grow "
+                      >
+                        {Avendor?.vendor?.businessName}
+                      </AppText>
+                    </li>
+
+                    <li className="flex justify-between gap-2">
+                      <AppText
+                        smallText
+                        weight="light"
+                        size={14}
+                        color="#1A1A1A"
+                        className="w-[45%]"
+                      >
                         Email
                       </AppText>
                       <AppText
@@ -377,7 +401,9 @@ export default function VendorDetails() {
                         {Avendor?.vendor?.stores?.map((_: any, i: number) => (
                           <div
                             className={`flex flex-row items-center gap-4 lg:px-[10px] px-2 py-[12px] cursor-pointer hover:bg-[#03660007] ${
-                              _?.id === selectedStore?.id
+                              _?.id ===
+                              (selectedStore?.id ||
+                                Avendor?.vendor?.stores[0]?.id)
                                 ? "bg-[#0366000D]"
                                 : ""
                             }`}
@@ -388,9 +414,9 @@ export default function VendorDetails() {
                           >
                             <span className=" w-[50.22px] h-[50.22px] flex-shrink-0">
                               <img
-                                src={ShopLogo}
+                                src={_?.logo}
                                 alt="shopLogo.png"
-                                className="object-contain w-full h-full"
+                                className="object-contain w-full h-full rounded-full"
                               />
                             </span>
                             <div className="flex flex-col gap-[2px]">
@@ -451,7 +477,7 @@ export default function VendorDetails() {
 
               {/* Store Information */}
 
-              {Avendor?.vendor?.stores?.length > 0 && selectedStore && (
+              {Avendor?.vendor?.stores?.length > 0 && (
                 <div className="w-full flex flex-col  xl:w-[56%]">
                   <div className="bg-[#FDFDFD] lg:px-6 px-4 py-10 rounded-[6px] ">
                     <div className="flex justify-between items-center mb-4">
@@ -466,11 +492,12 @@ export default function VendorDetails() {
                           Store Information
                         </AppText>
                       </div>
-                      <span className=" w-[116.39px] h-[47.54px] ">
+                      <span className=" w-[116.39px] h-[47.54px] rounded-[8px]">
                         <img
-                          src={ShopImage}
+                          src={selectedStore?.coverImage ||
+                            Avendor?.vendor?.stores[0]?.coverImage}
                           alt="shopImage.png"
-                          className="object-contain w-full h-full"
+                          className="object-cover w-full h-full rounded-[8px]"
                         />
                       </span>
                     </div>
@@ -496,7 +523,8 @@ export default function VendorDetails() {
                           align="left"
                           className="grow w-[55%]"
                         >
-                          {selectedStore?.name}
+                          {selectedStore?.name ||
+                            Avendor?.vendor?.stores[0]?.name}
                         </AppText>
                       </li>
                       <li className="flex justify-between gap-2">
@@ -517,7 +545,8 @@ export default function VendorDetails() {
                             color="#1A1A1A"
                             align="left"
                           >
-                            {selectedStore?.address}
+                            {selectedStore?.address ||
+                              Avendor?.vendor?.stores[0]?.address}
                           </AppText>
                         </span>
                       </li>
@@ -540,8 +569,13 @@ export default function VendorDetails() {
                           align="left"
                           className="grow w-[55%]"
                         >
-                          {selectedStore?.createdAt
-                            ? format(selectedStore?.createdAt, "dd/MM/yyyy")
+                          {selectedStore?.createdAt ||
+                          Avendor?.vendor?.stores[0]?.createdAt
+                            ? format(
+                                selectedStore?.createdAt ||
+                                  Avendor?.vendor?.stores[0]?.createdAt,
+                                "dd/MM/yyyy"
+                              )
                             : "N/A"}
                         </AppText>
                       </li>
@@ -564,7 +598,8 @@ export default function VendorDetails() {
                           align="left"
                           className="grow w-[55%]"
                         >
-                          {selectedStore?.email}
+                          {selectedStore?.email ||
+                            Avendor?.vendor?.stores[0]?.email}
                         </AppText>
                       </li>
                       <li className="flex justify-between gap-2">
@@ -586,7 +621,12 @@ export default function VendorDetails() {
                             align="left"
                             className="lg:hidden"
                           >
-                            #{truncateText(selectedStore?.id, 15)}
+                            #
+                            {truncateText(
+                              selectedStore?.id ||
+                                Avendor?.vendor?.stores[0]?.id,
+                              15
+                            )}
                           </AppText>
                           <AppText
                             smallText
@@ -596,7 +636,9 @@ export default function VendorDetails() {
                             align="left"
                             className="hidden lg:block"
                           >
-                            #{selectedStore?.id}
+                            #
+                            {selectedStore?.id ||
+                              Avendor?.vendor?.stores[0]?.id}
                           </AppText>
                           <span className=" w-[15px] h-[16.67px] cursor-pointer flex-shrink-0">
                             <img
@@ -648,9 +690,13 @@ export default function VendorDetails() {
                           align="left"
                           className="grow w-[55%]"
                         >
-                          {selectedStore?.fulfillmentOption === "both"
+                          {selectedStore?.fulfillmentOption === "both" ||
+                          Avendor?.vendor?.stores[0]?.fulfillmentOption ===
+                            "both"
                             ? "Delivery & Pick-up"
-                            : selectedStore?.fulfillmentOption === "pick_up"
+                            : selectedStore?.fulfillmentOption === "pick_up" ||
+                              Avendor?.vendor?.stores[0]?.fulfillmentOption ===
+                                "pick_up"
                             ? "Pick up"
                             : "Delivery"}
                         </AppText>
@@ -723,12 +769,15 @@ export default function VendorDetails() {
                             className={cn(
                               " text-white px-[6px] py-1 rounded ",
                               statusColors[
-                                selectedStore?.status as keyof typeof statusColors
+                                (selectedStore?.status ||
+                                  Avendor?.vendor?.stores[0]
+                                    ?.status) as keyof typeof statusColors
                               ]
                             )}
                             transform="capitalize"
                           >
-                            {selectedStore?.status}
+                            {selectedStore?.status ||
+                              Avendor?.vendor?.stores[0]?.status}
                           </AppText>
                         </span>
                       </li>
@@ -880,44 +929,45 @@ export default function VendorDetails() {
             </div>
           )}
 
-          {selectedStore?.status === "pending" && (
-            <div className="mt-8 flex flex-col lg:flex-row justify-center gap-4">
-              <span className="min-w-[140px]">
-                <AppButton
-                  text="Approve"
-                  fullWidth
-                  textColor="#1A1A1A"
-                  borderRad={24}
-                  bg="#E2E8F0"
-                  py={12}
-                  px={16}
-                  className="shadow hover:opacity-[0.7]"
-                  onClick={() => {
-                    handleAprroveStore();
-                  }}
-                  loading={approveLoading}
-                />
-              </span>
-              <span className="min-w-[140px]">
-                <AppButton
-                  text="Reject"
-                  fullWidth
-                  textColor="#FFFFFF"
-                  borderRad={24}
-                  bg="#D82C0D"
-                  py={12}
-                  px={16}
-                  className="shadow hover:opacity-[0.7]"
-                  onClick={() => {
-                    setReject(true)
-                  }}
-                  // loading={rejectLoading}
-                />
-              </span>
-              {/* <Button variant="outline">Approve</Button> */}
-              {/* <Button variant="destructive">Reject</Button> */}
-            </div>
-          )}
+          {selectedStore?.status === "pending" ||
+            (Avendor?.vendor?.stores[0]?.status === "pending" && (
+              <div className="mt-8 flex flex-col lg:flex-row justify-center gap-4">
+                <span className="min-w-[140px]">
+                  <AppButton
+                    text="Approve"
+                    fullWidth
+                    textColor="#1A1A1A"
+                    borderRad={24}
+                    bg="#E2E8F0"
+                    py={12}
+                    px={16}
+                    className="shadow hover:opacity-[0.7]"
+                    onClick={() => {
+                      handleAprroveStore();
+                    }}
+                    loading={approveLoading}
+                  />
+                </span>
+                <span className="min-w-[140px]">
+                  <AppButton
+                    text="Reject"
+                    fullWidth
+                    textColor="#FFFFFF"
+                    borderRad={24}
+                    bg="#D82C0D"
+                    py={12}
+                    px={16}
+                    className="shadow hover:opacity-[0.7]"
+                    onClick={() => {
+                      setReject(true);
+                    }}
+                    // loading={rejectLoading}
+                  />
+                </span>
+                {/* <Button variant="outline">Approve</Button> */}
+                {/* <Button variant="destructive">Reject</Button> */}
+              </div>
+            ))}
         </div>
       )}
 
@@ -926,8 +976,8 @@ export default function VendorDetails() {
           open={reject}
           onClose={() => setReject(false)}
           rejectReason={rejectReason}
-          setRejectReason ={setRejectReason}
-          handleRejectStore ={handleRejectStore}
+          setRejectReason={setRejectReason}
+          handleRejectStore={handleRejectStore}
           rejectLoading={rejectLoading}
         />
       )}

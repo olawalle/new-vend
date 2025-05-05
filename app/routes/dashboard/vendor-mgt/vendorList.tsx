@@ -63,7 +63,9 @@ const data = [
 const statusColors = {
   pending: "bg-[#E07B39] ",
   approved: "bg-[#3A8E42]",
+  true: "bg-[#3A8E42]",
   rejected: "bg-[#B33A3A]",
+  false: "bg-[#B33A3A]",
   deleted: "bg-[#B33A3A]",
   active: "bg-[#3A8E42]",
 };
@@ -321,7 +323,7 @@ export default function VendorList() {
                                 weight="light"
                                 size={16}
                               >
-                                Name
+                                Vendor Name
                               </AppText>
                             </th>
                             <th className="px-4 py-3">
@@ -361,6 +363,26 @@ export default function VendorList() {
                                 weight="light"
                                 size={16}
                               >
+                                Onboard Prog.
+                              </AppText>
+                            </th>
+                            <th className="px-4 py-3">
+                              <AppText
+                                color="#1A1A1A"
+                                smallText
+                                weight="light"
+                                size={16}
+                              >
+                                Onboard Comp.
+                              </AppText>
+                            </th>
+                            <th className="px-4 py-3">
+                              <AppText
+                                color="#1A1A1A"
+                                smallText
+                                weight="light"
+                                size={16}
+                              >
                                 Date Joined
                               </AppText>
                             </th>
@@ -390,100 +412,142 @@ export default function VendorList() {
                         <tbody className="divide-y">
                           {currentData?.vendors &&
                             currentData?.vendors?.map(
-                              (item: any, index: number) => (
-                                <tr
-                                  key={index}
-                                  className={`hover:bg-muted/50 cursor-pointer ${
-                                    item?.owner?.status === "deleted"
-                                      ? "opacity-[60%]"
-                                      : ""
-                                  }`}
-                                  onClick={() => {
-                                    navigate("/vendors-details", {
-                                      state: { vendorId: item?.id },
-                                    });
-                                  }}
-                                >
-                                  {/* <td className="px-4 py-3">
+                              (item: any, index: number) => {
+                                const stageLength =
+                                item?.onboardingProgress !== null
+                                  ? Object.keys(item?.onboardingProgress)?.length
+                                  : 0;
+
+                                  console.log(item?.onboardingComplete);
+                                  
+                                return (
+                                  <tr
+                                    key={index}
+                                    className={`hover:bg-muted/50 cursor-pointer ${
+                                      item?.owner?.status === "deleted"
+                                        ? "opacity-[60%]"
+                                        : ""
+                                    }`}
+                                    onClick={() => {
+                                      navigate("/vendors-details", {
+                                        state: { vendorId: item?.id },
+                                      });
+                                    }}
+                                  >
+                                    {/* <td className="px-4 py-3">
                                     <Checkbox className="border-[1.5px] border-[#6F767E66] rounded-[4px] data-[state=checked]:bg-[#036600] data-[state=checked]:border-[#036600] w-5 h-5"
                                      onClick={(e) => e.stopPropagation()}
                                     />
                                   </td> */}
-                                  <td className="px-4 py-3">
-                                    <AppText
-                                      color="#1A1A1A"
-                                      smallText
-                                      weight="light"
-                                      size={14}
-                                    >
-                                      {item?.owner?.firstName}{" "}
-                                      {item?.owner?.lastName}
-                                    </AppText>
-                                  </td>
-                                  <td className="px-4 py-3">
-                                    <AppText
-                                      color="#1A1A1A"
-                                      smallText
-                                      weight="light"
-                                      size={14}
-                                    >
-                                      {item?.owner?.email}
-                                    </AppText>
-                                  </td>
-                                  <td className="px-4 py-3">
-                                    <AppText
-                                      color="#1A1A1A"
-                                      smallText
-                                      weight="light"
-                                      size={14}
-                                    >
-                                      {item?.owner?.phone}
-                                    </AppText>
-                                  </td>
-                                  <td className="px-4 py-3">
-                                    <AppText
-                                      color="#1A1A1A"
-                                      smallText
-                                      weight="light"
-                                      size={14}
-                                    >
-                                      #{item?.ownerId}
-                                    </AppText>
-                                  </td>
-                                  <td className="px-4 py-3">
-                                    <AppText
-                                      color="#1A1A1A"
-                                      smallText
-                                      weight="light"
-                                      size={14}
-                                    >
-                                      {item?.createdAt
-                                        ? format(item?.createdAt, "dd/MM/yyyy")
-                                        : "N/A"}
-                                    </AppText>
-                                  </td>
-                                  <td className="px-4 py-3">
-                                    <span
-                                      className={cn(
-                                        "px-2 py-1 rounded-[4px]",
-                                        statusColors[
-                                          item?.owner
-                                            ?.status as keyof typeof statusColors
-                                        ]
-                                      )}
-                                    >
+                                    <td className="px-4 py-3">
                                       <AppText
-                                        color="#FFFFFF"
+                                        color="#1A1A1A"
                                         smallText
                                         weight="light"
                                         size={14}
-                                        transform="capitalize"
                                       >
-                                        {item?.owner?.status}
+                                        {item?.businessName}
                                       </AppText>
-                                    </span>
-                                  </td>
-                                  {/* <td className="px-4 py-3">
+                                    </td>
+                                    <td className="px-4 py-3">
+                                      <AppText
+                                        color="#1A1A1A"
+                                        smallText
+                                        weight="light"
+                                        size={14}
+                                      >
+                                        {item?.owner?.email}
+                                      </AppText>
+                                    </td>
+                                    <td className="px-4 py-3">
+                                      <AppText
+                                        color="#1A1A1A"
+                                        smallText
+                                        weight="light"
+                                        size={14}
+                                      >
+                                        {item?.owner?.phone}
+                                      </AppText>
+                                    </td>
+                                    <td className="px-4 py-3">
+                                      <AppText
+                                        color="#1A1A1A"
+                                        smallText
+                                        weight="light"
+                                        size={14}
+                                      >
+                                        #{item?.ownerId}
+                                      </AppText>
+                                    </td>
+                                    <td className="px-4 py-3">
+                                      <AppText
+                                        color="#1A1A1A"
+                                        smallText
+                                        weight="light"
+                                        size={14}
+                                      >
+                                        Level {stageLength}
+                                      </AppText>
+                                    </td>
+
+                                    <td className="px-4 py-3">
+                                      <span
+                                        className={cn(
+                                          "px-2 py-1 rounded-[4px]",
+                                          statusColors[
+                                            item?.onboardingComplete as keyof typeof statusColors
+                                          ]
+                                        )}
+                                      >
+                                        <AppText
+                                          color="#FFFFFF"
+                                          smallText
+                                          weight="light"
+                                          size={14}
+                                          transform="capitalize"
+                                        >
+                                          {item?.onboardingComplete ? "True" : "False"}
+                                        </AppText>
+                                      </span>
+                                    </td>
+                                    
+                                    <td className="px-4 py-3">
+                                      <AppText
+                                        color="#1A1A1A"
+                                        smallText
+                                        weight="light"
+                                        size={14}
+                                      >
+                                        {item?.createdAt
+                                          ? format(
+                                              item?.createdAt,
+                                              "dd/MM/yyyy"
+                                            )
+                                          : "N/A"}
+                                      </AppText>
+                                    </td>
+                                    <td className="px-4 py-3">
+                                      <span
+                                        className={cn(
+                                          "px-2 py-1 rounded-[4px]",
+                                          statusColors[
+                                            item?.owner
+                                              ?.status as keyof typeof statusColors
+                                          ]
+                                        )}
+                                      >
+                                        <AppText
+                                          color="#FFFFFF"
+                                          smallText
+                                          weight="light"
+                                          size={14}
+                                          transform="capitalize"
+                                        >
+                                          {item?.owner?.status}
+                                        </AppText>
+                                      </span>
+                                    </td>
+                                    {/* <td className="px-4 py-3">
                                     {item?.owner?.status === "pending" ? (
                                       <DropdownMenu>
                                         <DropdownMenuTrigger
@@ -588,8 +652,9 @@ export default function VendorList() {
                                       </DropdownMenu>
                                     )}
                                   </td> */}
-                                </tr>
-                              )
+                                  </tr>
+                                );
+                              }
                             )}
                         </tbody>
                       </table>
@@ -616,7 +681,7 @@ export default function VendorList() {
                     <AppText color="#1A1A1A" smallText weight="light" size={14}>
                       Showing 1 to 10 of {totalItems}
                     </AppText>
-                    <div className="h-[30px] w-[0.5px] bg-[#000000CC]" />
+                    {/* <div className="h-[30px] w-[0.5px] bg-[#000000CC]" />
                     <div className="flex flex-row gap-3 items-center">
                       <AppText
                         color="#1A1A1A"
@@ -630,7 +695,7 @@ export default function VendorList() {
                         placeholder=""
                         className="w-[40px] h-[40px] border border-[#114A45] rounded-[8px] p-2 text-[#1A1A1A] text-[13px]"
                       />
-                    </div>
+                    </div> */}
                   </div>
                   <div className=" py-2 px-2 mt-3 lg:my-0">
                     <Pagination

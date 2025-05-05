@@ -290,15 +290,15 @@ export default function VendorDetails() {
                                       size={14}
                                       align="center"
                                       color={
-                                        parseInt(item?.stock) >
-                                        parseInt(item?.minStockLevel || 0)
+                                        parseInt(item?.stock || "0", 10) >
+                                        parseInt(item?.minStockLevel || "0", 10)
                                           ? "#27AE60"
                                           : "#F04D58"
                                       }
                                       smallText
                                     >
-                                      {parseInt(item?.stock) >
-                                      parseInt(item?.minStockLevel || 0)
+                                      {parseInt(item?.stock || "0", 10) >
+                                      parseInt(item?.minStockLevel || "0", 10)
                                         ? "In Stock"
                                         : "Out of Stock"}
                                     </AppText>
