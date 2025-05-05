@@ -19,23 +19,7 @@ import { format } from "date-fns";
 import { cn } from "~/lib/utils";
 import AnimatedLoading from "~/compo/AnimatedLoading";
 import { truncateText } from "~/hooks/utils";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "~/components/ui/dropdown-menu";
-import { Input } from "~/components/ui/input";
-import {
-  ChevronLeft,
-  ChevronRight,
-  MoreHorizontal,
-  MoreVertical,
-  SlidersHorizontal,
-  Search,
-  CircleX,
-  Eye,
-} from "lucide-react";
+
 import Pagination from "~/compo/pagination";
 import { useToast } from "~/compo/use-toast";
 import { RejectionModal } from "~/compo/RejectionModal";
