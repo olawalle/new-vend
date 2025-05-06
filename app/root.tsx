@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import { Toaster as Toaster2 } from "~/compo/toaster";
 
 import type { Route } from "./+types/root";
+import "react-day-picker/style.css";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
