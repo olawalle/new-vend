@@ -56,7 +56,12 @@
     "vite-tsconfig-paths": "^5.1.4",
     "@rollup/wasm-node": "^4.6.0"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.32.1"
+  },
   "overrides": {
-    "rollup": "^4.6.0"
+    "vite": {
+      "rollup": "npm:@rollup/wasm-node"
+    }
   }
 }
