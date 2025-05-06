@@ -60,8 +60,6 @@
     "@rollup/rollup-linux-x64-gnu": "4.40.2"
   },
   "overrides": {
-    "vite": {
-      "rollup": "npm:@rollup/wasm-node"
-    }
+    "rollup": "npm:@rollup/wasm-node"
   }
 }
