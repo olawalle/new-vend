@@ -14,26 +14,24 @@ import UserImage from "~/assets/user-image.png";
 function DashboardLayout() {
   const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = React.useState(false);
-  const [user, setUser] = React.useState<any>(null)
+  const [user, setUser] = React.useState<any>(null);
 
   React.useEffect(() => {
     const savedUser = localStorage.getItem("savedUser");
-    if (savedUser){
-      setUser(JSON.parse(savedUser))
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
     }
-  },[])
+  }, []);
 
   React.useEffect(() => {
     console.log(user);
-    
-  },[user])
+  }, [user]);
 
   const getInitials = (firstName?: string, lastName?: string): string => {
     const first = firstName ? firstName.charAt(0).toUpperCase() : "";
     const last = lastName ? lastName.charAt(0).toUpperCase() : "";
     return `${first}${last}`;
   };
-  
 
   return (
     <div>
@@ -81,15 +79,15 @@ function DashboardLayout() {
             </div>
 
             <AppText
-                weight="semibold"
-                smallText
-                size={14}
-                color="#1A1A1A"
-                align="right"
-                className="flex xl:hidden"
-              >
-                {getInitials(user?.firstName, user?.lastName)}
-              </AppText>
+              weight="semibold"
+              smallText
+              size={14}
+              color="#1A1A1A"
+              align="right"
+              className="flex xl:hidden"
+            >
+              {getInitials(user?.firstName, user?.lastName)}
+            </AppText>
             <div className="w-10 h-10 rounded-full">
               <img
                 src={UserImage}
@@ -125,9 +123,7 @@ function DashboardLayout() {
             <SideBarMenu setShowSidebar={setShowSidebar} />
           </div>
           <div className="min-h-[90%] grow overflow-y-scroll bg-[#F4F6FA] px-[10px] py-[30px]">
-            {/* <div > */}
             <Outlet />
-            {/* </div> */}
           </div>
         </div>
       </div>
