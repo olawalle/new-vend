@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npx vite build",
+    "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"
@@ -19,7 +19,6 @@
     "@react-router/node": "^7.4.1",
     "@react-router/serve": "^7.4.1",
     "@tanstack/react-query": "^5.74.4",
-    "@vercel/react-router": "^1.1.0",
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -43,14 +42,12 @@
   },
   "devDependencies": {
     "@react-router/dev": "^7.4.1",
-    "@rollup/wasm-node": "^4.6.0",
     "@tailwindcss/vite": "^4.0.0",
     "@types/lodash": "^4.17.16",
     "@types/node": "^20",
     "@types/qs": "^6.9.18",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
-    "@vitejs/plugin-react": "^4.4.1",
     "react-router-devtools": "^1.1.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.2",
